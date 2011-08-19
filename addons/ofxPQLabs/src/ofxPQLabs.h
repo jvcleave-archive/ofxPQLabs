@@ -38,6 +38,7 @@ public:
 
 	ofEvent<RotateEvent> rotateEventDispatcher;
 	ofEvent<RotatingEvent> rotatingEventDispatcher;
+	
 	ofEvent<ParallelEvent> parallelEventDispatcher;
 	ofEvent<ParallelMoveEvent> parallelMoveEventDispatcher;
 	ofEvent<MultiEvent> multiEventDispatcher;

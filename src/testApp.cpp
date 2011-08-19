@@ -3,9 +3,22 @@
 //--------------------------------------------------------------
 void testApp::setup()
 {
-	//ofSetLogLevel(OF_LOG_VERBOSE);
+	//
 	connection.connect("127.0.0.1");
 	ofAddListener(connection.singleTouchGestureEventDispatcher, this, &testApp::onSingleTouchGestureEvent);
+	ofAddListener(connection.singleTouchMoveGestureEventDispatcher, this, &testApp::onSingleTouchMoveEvent);
+	ofAddListener(connection.rotateEventDispatcher, this, &testApp::onRotateEvent);
+	ofAddListener(connection.rotatingEventDispatcher, this, &testApp::onRotatingEvent);
+	ofAddListener(connection.secondTouchEventDispatcher, this, &testApp::onSecondTouchEvent);
+	ofAddListener(connection.splitEventDispatcher, this, &testApp::onSplitEvent);
+	ofAddListener(connection.splitMoveEventDispatcher, this, &testApp::onSplitMoveEvent);
+	ofAddListener(connection.parallelEventDispatcher, this, &testApp::onParallelEvent);
+	ofAddListener(connection.parallelClickEventDispatcher, this, &testApp::onParallelClickEvent);
+	ofAddListener(connection.parallelMoveEventDispatcher, this, &testApp::onParallelMoveEvent);
+	ofAddListener(connection.multiEventDispatcher, this, &testApp::onMultiEvent);
+	ofAddListener(connection.multiMoveEventDispatcher, this, &testApp::onMultiMoveEvent);
+	ofAddListener(connection.gestureClearEventDispatcher, this, &testApp::onGestureClearEvent);
+
 }
 
 void testApp::onSingleTouchGestureEvent(SingleTouchGestureEvent & event)
@@ -85,7 +98,14 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-
+	if(key == 'v')
+	{
+		ofSetLogLevel(OF_LOG_VERBOSE);
+	}
+	if (key =='s') 
+	{
+		ofSetLogLevel(OF_LOG_SILENT);
+	}
 }
 
 //--------------------------------------------------------------

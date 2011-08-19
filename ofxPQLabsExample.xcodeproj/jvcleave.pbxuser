@@ -127,11 +127,6 @@
 		name = ofxPQLabs.revHEAD.cpp;
 		path = "/var/folders/YS/YSZburfHGNK0ngbArsS91k+++TI/-Tmp-/com.madebysofa.Versions/ofxPQLabs.revHEAD.cpp";
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1723, 9230}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{11395, 1975}";
-		};
 	};
 	03CB221B13FE463400E8E377 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -266,7 +261,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					1545,
+					1098,
 					20,
 					48,
 					43,
@@ -305,8 +300,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 335421191;
-			PBXWorkspaceStateSaveDate = 335421191;
+			PBXPerProjectTemplateStateSaveDate = 335479369;
+			PBXWorkspaceStateSaveDate = 335479369;
 		};
 		perUserProjectItems = {
 			0352F58313FB953D00846E11 = 0352F58313FB953D00846E11 /* PBXTextBookmark */;
@@ -320,9 +315,9 @@
 			03CB21EA13FE1F0000E8E377 = 03CB21EA13FE1F0000E8E377 /* PBXTextBookmark */;
 			03CB21EB13FE1F0000E8E377 = 03CB21EB13FE1F0000E8E377 /* PBXTextBookmark */;
 			03CB21ED13FE1F0000E8E377 = 03CB21ED13FE1F0000E8E377 /* PBXTextBookmark */;
-			03CB221B13FE463400E8E377 /* PBXTextBookmark */ = 03CB221B13FE463400E8E377 /* PBXTextBookmark */;
-			03CB221C13FE463400E8E377 /* PBXTextBookmark */ = 03CB221C13FE463400E8E377 /* PBXTextBookmark */;
-			03CB221D13FE463400E8E377 /* PBXTextBookmark */ = 03CB221D13FE463400E8E377 /* PBXTextBookmark */;
+			03CB221B13FE463400E8E377 = 03CB221B13FE463400E8E377 /* PBXTextBookmark */;
+			03CB221C13FE463400E8E377 = 03CB221C13FE463400E8E377 /* PBXTextBookmark */;
+			03CB221D13FE463400E8E377 = 03CB221D13FE463400E8E377 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 03DCB8FA13FB1010004E126E /* Source Control */;
 		userBuildSettings = {
