@@ -15,9 +15,9 @@
 #include "ofxPQLabs.h"
 
 
-
 ofxPQLabs::ofxPQLabs()
 {
+	isVerbose = false;
 	memset(touchGestureTypes,0, sizeof(touchGestureTypes));
 }
 
@@ -81,59 +81,64 @@ void ofxPQLabs::connect(const char * ipAddress = "127.0.0.1")
 void ofxPQLabs:: initializeFunctionsOnTouchGestures()
 {
 	ofLog(OF_LOG_VERBOSE, "ofxPQLabs::initializeFunctionsOnTouchGestures");
-	touchGestureTypes[TG_TOUCH_START] = onTG_TouchStart;
-	touchGestureTypes[TG_DOWN] = &ofxPQLabs::onTG_Down;
-	touchGestureTypes[TG_MOVE] = &ofxPQLabs::onTG_Move;
-	touchGestureTypes[TG_UP] = &ofxPQLabs::onTG_Up;
+	touchGestureTypes[TG_TOUCH_START] = &ofxPQLabs::onSingleTouchGesture;
+	touchGestureTypes[TG_DOWN] = &ofxPQLabs::onSingleTouchGesture;
+	touchGestureTypes[TG_MOVE] = &ofxPQLabs::onSingleTouchGesture;
+	touchGestureTypes[TG_UP] = &ofxPQLabs::onSingleTouchGesture;
 	
-	touchGestureTypes[TG_MOVE_RIGHT] = &ofxPQLabs::onTG_MoveRight;
-	touchGestureTypes[TG_MOVE_UP] = &ofxPQLabs::onTG_MoveUp;
-	touchGestureTypes[TG_MOVE_LEFT] = &ofxPQLabs::onTG_MoveLeft;
-	touchGestureTypes[TG_MOVE_DOWN] = &ofxPQLabs::onTG_MoveDown;
+	touchGestureTypes[TG_MOVE_RIGHT] = &ofxPQLabs::onSingleTouchMove;
+	touchGestureTypes[TG_MOVE_UP] = &ofxPQLabs::onSingleTouchMove;
+	touchGestureTypes[TG_MOVE_LEFT] = &ofxPQLabs::onSingleTouchMove;
+	touchGestureTypes[TG_MOVE_DOWN] = &ofxPQLabs::onSingleTouchMove;
 
 
-	touchGestureTypes[TG_SECOND_DOWN] = &ofxPQLabs::onTG_SecondDown;
-	touchGestureTypes[TG_SECOND_UP] = &ofxPQLabs::onTG_SecondUp;
+	touchGestureTypes[TG_SECOND_DOWN] = &ofxPQLabs::onSecondTouch;
+	touchGestureTypes[TG_SECOND_UP] = &ofxPQLabs::onSecondTouch;
 
-	touchGestureTypes[TG_SPLIT_START] = &ofxPQLabs::onTG_SplitStart;
-	touchGestureTypes[TG_SPLIT_APART] = &ofxPQLabs::onTG_SplitApart;
-	touchGestureTypes[TG_SPLIT_CLOSE] = &ofxPQLabs::onTG_SplitClose;
-	touchGestureTypes[TG_SPLIT_END] = &ofxPQLabs::onTG_SplitEnd;
+	touchGestureTypes[TG_SPLIT_START] = &ofxPQLabs::onSplit;
+	touchGestureTypes[TG_SPLIT_END] = &ofxPQLabs::onSplit;
+	
+	touchGestureTypes[TG_SPLIT_APART] = &ofxPQLabs::onSplitMove;
+	touchGestureTypes[TG_SPLIT_CLOSE] = &ofxPQLabs::onSplitMove;
 	
 	
-	touchGestureTypes[TG_ROTATE_START] = &ofxPQLabs::onTG_RotateStart;
-	touchGestureTypes[TG_ROTATE_ANTICLOCK] = &ofxPQLabs::onTG_RotateCounterClockwise;
-	touchGestureTypes[TG_ROTATE_CLOCK] = &ofxPQLabs::onTG_RotateClockwise;
-	touchGestureTypes[TG_ROTATE_END] = &ofxPQLabs::onTG_RotateEnd;
+	touchGestureTypes[TG_ROTATE_START] = &ofxPQLabs::onRotate;
+	touchGestureTypes[TG_ROTATE_END] = &ofxPQLabs::onRotate;
 	
-
-	touchGestureTypes[TG_NEAR_PARREL_DOWN] = &ofxPQLabs::onTG_NearParallelDown;
-	touchGestureTypes[TG_NEAR_PARREL_MOVE] = &ofxPQLabs::onTG_NearParallelMove;
-	touchGestureTypes[TG_NEAR_PARREL_UP] = &ofxPQLabs::onTG_NearParallelUp;
-	touchGestureTypes[TG_NEAR_PARREL_CLICK] = &ofxPQLabs::onTG_NearParallelClick;
-	touchGestureTypes[TG_NEAR_PARREL_DB_CLICK] = &ofxPQLabs::onTG_NearParallelDoubleClick;
-	
-
-	touchGestureTypes[TG_NEAR_PARREL_MOVE_RIGHT] = &ofxPQLabs::onTG_NearParallelMoveRight;
-	touchGestureTypes[TG_NEAR_PARREL_MOVE_UP] = &ofxPQLabs::onTG_NearParallelMoveUp;
-	touchGestureTypes[TG_NEAR_PARREL_MOVE_LEFT] = &ofxPQLabs::onTG_NearParallelMoveLeft;
-	touchGestureTypes[TG_NEAR_PARREL_MOVE_DOWN] = &ofxPQLabs::onTG_NearParallelMoveDown;
-	
-
-	touchGestureTypes[TG_MULTI_DOWN] = &ofxPQLabs::onTG_MultiDown;
-	touchGestureTypes[TG_MULTI_MOVE] = &ofxPQLabs::onTG_MultiMove;
-	touchGestureTypes[TG_MULTI_UP] = &ofxPQLabs::onTG_MultiUp;
+	touchGestureTypes[TG_ROTATE_ANTICLOCK] = &ofxPQLabs::onRotating;
+	touchGestureTypes[TG_ROTATE_CLOCK] = &ofxPQLabs::onRotating;
 	
 	
 
-	touchGestureTypes[TG_MULTI_MOVE_RIGHT] = &ofxPQLabs::onTG_MultiMoveRight;
-	touchGestureTypes[TG_MULTI_MOVE_UP] = &ofxPQLabs::onTG_MultiMoveUp;
-	touchGestureTypes[TG_MULTI_MOVE_LEFT] = &ofxPQLabs::onTG_MultiMoveLeft;
-	touchGestureTypes[TG_MULTI_MOVE_DOWN] = &ofxPQLabs::onTG_MultiMoveDown;
+	touchGestureTypes[TG_NEAR_PARALLEL_DOWN] = &ofxPQLabs::onParallel;
+	touchGestureTypes[TG_NEAR_PARALLEL_MOVE] = &ofxPQLabs::onParallel;
+	touchGestureTypes[TG_NEAR_PARALLEL_UP] = &ofxPQLabs::onParallel;
+	
+	
+	touchGestureTypes[TG_NEAR_PARALLEL_CLICK] = &ofxPQLabs::onParallelClick;
+	touchGestureTypes[TG_NEAR_PARALLEL_DB_CLICK] = &ofxPQLabs::onParallelClick;
+	
+
+	touchGestureTypes[TG_NEAR_PARALLEL_MOVE_RIGHT] = &ofxPQLabs::onParallelMove;
+	touchGestureTypes[TG_NEAR_PARALLEL_MOVE_UP] = &ofxPQLabs::onParallelMove;
+	touchGestureTypes[TG_NEAR_PARALLEL_MOVE_LEFT] = &ofxPQLabs::onParallelMove;
+	touchGestureTypes[TG_NEAR_PARALLEL_MOVE_DOWN] = &ofxPQLabs::onParallelMove;
+	
+
+	touchGestureTypes[TG_MULTI_DOWN] = &ofxPQLabs::onMulti;
+	touchGestureTypes[TG_MULTI_MOVE] = &ofxPQLabs::onMulti;
+	touchGestureTypes[TG_MULTI_UP] = &ofxPQLabs::onMulti;
+	
+	
+
+	touchGestureTypes[TG_MULTI_MOVE_RIGHT] = &ofxPQLabs::onMultiMove;
+	touchGestureTypes[TG_MULTI_MOVE_UP] = &ofxPQLabs::onMultiMove;
+	touchGestureTypes[TG_MULTI_MOVE_LEFT] = &ofxPQLabs::onMultiMove;
+	touchGestureTypes[TG_MULTI_MOVE_DOWN] = &ofxPQLabs::onMultiMove;
 	
 
 	
-	touchGestureTypes[TG_TOUCH_END] = &ofxPQLabs::onTG_TouchEnd;
+	touchGestureTypes[TG_TOUCH_END] = &ofxPQLabs::onGesturesClear;
 }
 
 
@@ -240,12 +245,11 @@ void ofxPQLabs:: onTouchGesture(const TouchGesture & tg)
 
 #pragma mark Gesture Callbacks: Basic 
 
-void ofxPQLabs:: onTG_TouchStart(const TouchGesture & tg, void * call_object)
+void ofxPQLabs:: onSingleTouchGesture(const TouchGesture & tg, void * call_object)
 {
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs:: onTG_TouchStart");
-	TouchEventData event(tg);
+	SingleTouchGestureEvent event(tg);
 	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
-	ofNotifyEvent(labsInstance->touchEventDataEventDispatcher, event);
+	ofNotifyEvent(labsInstance->singleTouchGestureEventDispatcher, event);
 }
 
 void ofxPQLabs:: onTG_Default(const TouchGesture & tg,void * call_object) // just show the gesture
@@ -261,403 +265,115 @@ void ofxPQLabs:: onTG_Default(const TouchGesture & tg,void * call_object) // jus
 	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_Default: "+ ss.str());
 }
 
-
-void ofxPQLabs:: onTG_Down(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Single Touch start " 
-		<< " Finger 1 X :" << tg.params[0]
-		<< " Finger 1 Y :" << tg.params[1]
-	<< endl;
-	
-	
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_Down " +ss.str());
-}
-
-void ofxPQLabs:: onTG_Move(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Single Touch move " 
-		<< " Finger 1 X :" << tg.params[0]
-		<< " Finger 1 Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_Move " +ss.str());
-}
-
-void ofxPQLabs:: onTG_Up(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Single Touch Up " 
-		<< " Finger 1 X :" << tg.params[0]
-		<< " Finger 1 Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_Up " +ss.str());
-}
-
 #pragma mark Gesture Callbacks: Directional Moves 
-void ofxPQLabs:: onTG_MoveRight(const TouchGesture & tg, void * call_object)
+void ofxPQLabs:: onSingleTouchMove(const TouchGesture & tg, void * call_object)
 {
-	stringstream ss;
-	ss << "  Move Right " 
-	<< " Finger 1 X :" << tg.params[0]
-	<< " Finger 1 Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_MoveRight " +ss.str());
-}
-
-void ofxPQLabs:: onTG_MoveUp(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Move Up " 
-	<< " Finger 1 X :" << tg.params[0]
-	<< " Finger 1 Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_MoveUp " +ss.str());
-}
-
-void ofxPQLabs:: onTG_MoveLeft(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Move Left " 
-	<< " Finger 1 X :" << tg.params[0]
-	<< " Finger 1 Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_MoveLeft " +ss.str());
-}
-
-void ofxPQLabs:: onTG_MoveDown(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Move Down " 
-	<< " Finger 1 X :" << tg.params[0]
-	<< " Finger 1 Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_MoveDown " +ss.str());
+	SingleTouchMoveEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->singleTouchMoveGestureEventDispatcher, event);
 }
 
 #pragma mark Gesture Callbacks: Second Down 
-void ofxPQLabs:: onTG_SecondDown(const TouchGesture & tg, void * call_object)
+void ofxPQLabs:: onSecondTouch(const TouchGesture & tg, void * call_object)
 {
-	stringstream ss;
-	
-	ss << "  Second Finger Down " 
-		<< " New Finger X :" << tg.params[0]
-		<< " New Finger Y :" << tg.params[1]
-		<< " Original Finger X :" << tg.params[2]
-		<< " Original Finger Y :" << tg.params[3]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_SecondDown " +ss.str());
+	SecondTouchEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->secondTouchEventDispatcher, event);
 }
 
-void ofxPQLabs:: onTG_SecondUp(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Second Finger Up " 
-		<< " Second Finger X :" << tg.params[0]
-		<< " Second Finger Y :" << tg.params[1]
-		<< " Original Finger X :" << tg.params[2]
-		<< " Original Finger Y :" << tg.params[3]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_SecondUp " +ss.str());
-}
+
 
 
 #pragma mark Gesture Callbacks: Split
-void ofxPQLabs:: onTG_SplitStart(const TouchGesture & tg, void * call_object)
+void ofxPQLabs:: onSplit(const TouchGesture & tg, void * call_object)
 {
-	stringstream ss;
-	ss << "  Zoom start " 
-		<< " Finger 1 X :" << tg.params[0]
-		<< " Finger 1 Y :" << tg.params[1]
-		<< " Finger 2 X :" << tg.params[2]
-		<< " Finger 2 Y :" << tg.params[3]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_SplitStart " +ss.str());
+	SplitEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->splitEventDispatcher, event);
 }
 
 
-void ofxPQLabs:: onTG_SplitApart(const TouchGesture & tg, void * call_object)
+void ofxPQLabs:: onSplitMove(const TouchGesture & tg, void * call_object)
 {
-	stringstream ss;
-	ss << "  Zoom Happening distance increase by " 
-		<< "Delta in pixels: "<< tg.params[0]
-		<< " Difference Ratio :" << tg.params[1]
-		<< " Finger 1 X :" << tg.params[2]
-		<< " Finger 1 Y :" << tg.params[3]
-		<< " Finger 2 X :" << tg.params[4]
-		<< " Finger 2 Y :" << tg.params[5]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_SplitApart " +ss.str());
+	SplitMoveEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->splitMoveEventDispatcher, event);
 }
 
-void ofxPQLabs:: onTG_SplitClose(const TouchGesture & tg, void * call_object)
-{
-	//	params[0] indicate the delta distance in pixels. params[1] indicate the delta ratio to the last distance of the two fingers.(params[2],params[3]) and (params[4],params[5]) is the positions of the two points.
 
-	stringstream ss;
-	ss << "  Pinch Happening distance decreased by " 
-		<< "Delta in pixels: "<< tg.params[0]
-		<< " Difference Ratio :" << tg.params[1]
-		<< " Finger 1 X :" << tg.params[2]
-		<< " Finger 1 Y :" << tg.params[3]
-		<< " Finger 2 X :" << tg.params[4]
-		<< " Finger 2 Y :" << tg.params[5]
-	<< endl;
-	
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_SplitClose " +ss.str());
-}
 
-void ofxPQLabs:: onTG_SplitEnd(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Pinch End  " 
-		<< " Finger 1 X :" << tg.params[0]
-		<< " Finger 1 Y :" << tg.params[1]
-		<< " Finger 2 X :" << tg.params[2]
-		<< " Finger 2 Y :" << tg.params[3]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_SplitEnd " +ss.str());
-}
 
 
 
 
 #pragma mark Gesture Callbacks: Rotate
-void ofxPQLabs:: onTG_RotateStart(const TouchGesture & tg, void * call_object)
+void ofxPQLabs:: onRotate(const TouchGesture & tg, void * call_object)
 {
-	stringstream ss;
-	ss << "  Rotate Start  " 
-		<< " Anchor Finger X :" << tg.params[0]
-		<< " Anchor Finger Y :" << tg.params[1]
-		<< " Rotating Finger X :" << tg.params[2]
-		<< " Rotating Finger Y :" << tg.params[3]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_RotateStart " +ss.str());
-	//listener->onRotateStart(tg);
+	RotateEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->rotateEventDispatcher, event);
 }
 
-void ofxPQLabs:: onTG_RotateCounterClockwise(const TouchGesture & tg, void * call_object)
+void ofxPQLabs:: onRotating(const TouchGesture & tg, void * call_object)
 {
-	stringstream ss;
-	ss << "  Rotating CounterClockwise  "
-		<< " Radians :" << tg.params[0]
-		<< " Anchor Finger X :" << tg.params[1]
-		<< " Anchor Finger Y :" << tg.params[2]
-		<< " Rotating Finger X :" << tg.params[3]
-		<< " Rotating Finger Y :" << tg.params[4]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_RotateCounterClockwise " +ss.str());
+	RotatingEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->rotatingEventDispatcher, event);
 }
 
-void ofxPQLabs:: onTG_RotateClockwise(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Rotating Clockwise  "
-		<< " Radians :" << tg.params[0]
-		<< " Anchor Finger X :" << tg.params[1]
-		<< " Anchor Finger Y :" << tg.params[2]
-		<< " Rotating Finger X :" << tg.params[3]
-		<< " Rotating Finger Y :" << tg.params[4]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_RotateClockwise " +ss.str());
-}
 
-void ofxPQLabs:: onTG_RotateEnd(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Rotate End  " 
-		<< " Anchor Finger X :" << tg.params[0]
-		<< " Anchor Finger Y :" << tg.params[1]
-		<< " Rotating Finger X :" << tg.params[2]
-		<< " Rotating Finger Y :" << tg.params[3]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_RotateEnd " +ss.str());
-}
 
 
 
 #pragma mark Gesture Callbacks: Near Parallel 
-void ofxPQLabs:: onTG_NearParallelDown(const TouchGesture & tg, void * call_object)
+void ofxPQLabs:: onParallel(const TouchGesture & tg, void * call_object)
 {
-	stringstream ss;
-	ss << "  Near Parallel " 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-		<< " Finger 1 X :" << tg.params[2]
-		<< " Finger 1 Y :" << tg.params[3]
-		<< " Finger 2 X :" << tg.params[4]
-		<< " Finger 2 Y :" << tg.params[5]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_NearParallelDown " +ss.str());
+	ParallelEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->parallelEventDispatcher, event);
 }
 
-void ofxPQLabs:: onTG_NearParallelMove(const TouchGesture & tg, void * call_object)
+
+void ofxPQLabs:: onParallelClick(const TouchGesture & tg, void * call_object)
 {
-	stringstream ss;
-	ss << "  Near Parallel Move" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-		<< " Finger 1 X :" << tg.params[2]
-		<< " Finger 1 Y :" << tg.params[3]
-		<< " Finger 2 X :" << tg.params[4]
-		<< " Finger 2 Y :" << tg.params[5]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_NearParallelMove " +ss.str());
+	ParallelClickEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->parallelClickEventDispatcher, event);
 }
 
-void ofxPQLabs:: onTG_NearParallelUp(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Near Parallel Up" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-		<< " Finger 1 X :" << tg.params[2]
-		<< " Finger 1 Y :" << tg.params[3]
-		<< " Finger 2 X :" << tg.params[4]
-		<< " Finger 2 Y :" << tg.params[5]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_NearParallelUp " +ss.str());
-}
 
-void ofxPQLabs:: onTG_NearParallelClick(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Near Parallel Click" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_NearParallelClick " +ss.str());
-}
-
-void ofxPQLabs:: onTG_NearParallelDoubleClick(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Near Parallel Double Click" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_NearParallelDoubleClick " +ss.str());
-}
 
 #pragma mark Gesture Callbacks: Near Parallel Directional Move 
-void ofxPQLabs:: onTG_NearParallelMoveRight(const TouchGesture & tg, void * call_object)
+void ofxPQLabs:: onParallelMove(const TouchGesture & tg, void * call_object)
 {
-	stringstream ss;
-	ss << "  Near Parallel Move Right" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_NearParallelMoveRight " +ss.str());
+	ParallelMoveEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->parallelMoveEventDispatcher, event);
 }
-
-void ofxPQLabs:: onTG_NearParallelMoveUp(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Near Parallel Move Up" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_NearParallelMoveUp " +ss.str());
-}
-
-void ofxPQLabs:: onTG_NearParallelMoveLeft(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << " Near Parallel Move Left" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_NearParallelMoveLeft " +ss.str());
-}
-
-void ofxPQLabs:: onTG_NearParallelMoveDown(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Near Parallel Move Down" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_NearParallelMoveDown " +ss.str());
-}
-
 #pragma mark Gesture Callbacks: Multi 
 
-void ofxPQLabs:: onTG_MultiDown(const TouchGesture & tg, void * call_object)
+void ofxPQLabs:: onMulti(const TouchGesture & tg, void * call_object)
 {
-	stringstream ss;
-	ss << "  Multi Down (+3 fingers)" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_MultiDown " +ss.str());
-}
-
-void ofxPQLabs:: onTG_MultiMove(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Multi Move (+3 fingers)" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_MultiMove " +ss.str());
-}
-
-void ofxPQLabs:: onTG_MultiUp(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Multi Up (+3 fingers)" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_MultiUp " +ss.str());
+	MultiEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->multiEventDispatcher, event);
 }
 
 #pragma mark Gesture Callbacks: Multi Directional Move 
-void ofxPQLabs:: onTG_MultiMoveRight(const TouchGesture & tg, void * call_object)
+void ofxPQLabs:: onMultiMove(const TouchGesture & tg, void * call_object)
 {
-	stringstream ss;
-	ss << "  Multi Move Right (+3 fingers)" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_MultiMoveRight " +ss.str());
-}
-
-void ofxPQLabs:: onTG_MultiMoveUp(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Multi Move Up (+3 fingers)" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_MultiMoveUp " +ss.str());
-}
-
-void ofxPQLabs:: onTG_MultiMoveLeft(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Multi Move Left (+3 fingers)" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_MultiMoveLeft " +ss.str());
-}
-
-void ofxPQLabs:: onTG_MultiMoveDown(const TouchGesture & tg, void * call_object)
-{
-	stringstream ss;
-	ss << "  Multi Move Down (+3 fingers)" 
-		<< " Middle Position X: "<< tg.params[0]
-		<< " Middle Position Y :" << tg.params[1]
-	<< endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_MultiMoveDown " +ss.str());
+	MultiMoveEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->multiMoveEventDispatcher, event);
 }
 
 #pragma mark Gesture Callbacks: END
 // onTG_TouchEnd: to clear what need to clear
-void ofxPQLabs:: onTG_TouchEnd(const TouchGesture & tg,void * call_object)
+void ofxPQLabs:: onGesturesClear(const TouchGesture & tg,void * call_object)
 {
-	stringstream ss;
-	ss << "  all the fingers is leaving and there is no fingers on the screen." << endl;
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_TouchEnd " +ss.str());
+
+	GestureClearEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->gestureClearEventDispatcher, event);
+	
 }

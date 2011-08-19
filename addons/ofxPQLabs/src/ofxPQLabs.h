@@ -16,12 +16,9 @@
 
 #include "ofMain.h"
 #include "PQMTClient.h"
+#include "ofxPQLabsEventTypes.h"
 
 
-struct TouchEventData {
-	TouchEventData(TouchGesture tg):touchGesture(tg){};
-	TouchGesture touchGesture;
-};
 
 
 
@@ -29,10 +26,26 @@ class ofxPQLabs{
 public:
 	ofxPQLabs();
 	~ofxPQLabs();
-	// Init: the entry of sample codes;
-	//		demonstrate: ConnectServer, SendRequest etc;
+	
+	bool isVerbose;
+	void log(const string & message);
 	void connect(const char * ipAddress);
-	ofEvent<TouchEventData> touchEventDataEventDispatcher;
+	ofEvent<SingleTouchGestureEvent> singleTouchGestureEventDispatcher;
+	ofEvent<SingleTouchMoveEvent> singleTouchMoveGestureEventDispatcher;
+	ofEvent<SecondTouchEvent> secondTouchEventDispatcher;
+	ofEvent<SplitEvent> splitEventDispatcher;
+	ofEvent<SplitMoveEvent> splitMoveEventDispatcher;
+
+	ofEvent<RotateEvent> rotateEventDispatcher;
+	ofEvent<RotatingEvent> rotatingEventDispatcher;
+	ofEvent<ParallelEvent> parallelEventDispatcher;
+	ofEvent<ParallelMoveEvent> parallelMoveEventDispatcher;
+	ofEvent<MultiEvent> multiEventDispatcher;
+	ofEvent<MultiMoveEvent> multiMoveEventDispatcher;
+	ofEvent<ParallelClickEvent> parallelClickEventDispatcher;
+	ofEvent<GestureClearEvent> gestureClearEventDispatcher;
+
+	
 	
 private:
 #pragma mark Callback functions
@@ -65,59 +78,31 @@ private:
 	//
 
 	//here use function pointer table to handle the different gesture type;
+	
+	//Some below are combined until I decide they are better broken up again :/
 	typedef void (*PFuncOnTouchGesture)(const TouchGesture & tg, void * call_object);
 	static void onTG_Default(const TouchGesture & tg,void * call_object); // just show the gesture
 
-	static void onTG_TouchStart(const TouchGesture & tg,void * call_object);
-	static void onTG_Down(const TouchGesture & tg,void * call_object);
-	static void onTG_Move(const TouchGesture & tg,void * call_object);
-	static void onTG_Up(const TouchGesture & tg,void * call_object);
-
-	//
-	static void onTG_MoveRight(const TouchGesture & tg,void * call_object);
-	static void onTG_MoveUp(const TouchGesture & tg,void * call_object);
-	static void onTG_MoveLeft(const TouchGesture & tg,void * call_object);
-	static void onTG_MoveDown(const TouchGesture & tg,void * call_object);
+	static void onSingleTouchGesture(const TouchGesture & tg,void * call_object);
+	static void onSingleTouchMove(const TouchGesture & tg,void * call_object);
 	
-	
-	static void onTG_SecondDown(const TouchGesture & tg,void * call_object);
-	static void onTG_SecondUp(const TouchGesture & tg,void * call_object);
+	static void onSecondTouch(const TouchGesture & tg,void * call_object);
 
-	//
-	static void onTG_SplitStart(const TouchGesture & tg,void * call_object);
-	static void onTG_SplitApart(const TouchGesture & tg,void * call_object);
-	static void onTG_SplitClose(const TouchGesture & tg,void * call_object);
-	static void onTG_SplitEnd(const TouchGesture & tg,void * call_object);
-	
-	//
-	static void onTG_RotateStart(const TouchGesture & tg,void * call_object);
-	static void onTG_RotateCounterClockwise(const TouchGesture & tg,void * call_object);
-	static void onTG_RotateClockwise(const TouchGesture & tg,void * call_object);
-	static void onTG_RotateEnd(const TouchGesture & tg,void * call_object);
+	static void onSplit(const TouchGesture & tg,void * call_object);
+	static void onSplitMove(const TouchGesture & tg,void * call_object);
 
-	static void onTG_NearParallelDown(const TouchGesture & tg,void * call_object);
-	static void onTG_NearParallelMove(const TouchGesture & tg,void * call_object);
-	static void onTG_NearParallelUp(const TouchGesture & tg,void * call_object);
-	static void onTG_NearParallelClick(const TouchGesture & tg,void * call_object);
-	static void onTG_NearParallelDoubleClick(const TouchGesture & tg,void * call_object);
-	
+	static void onRotate(const TouchGesture & tg,void * call_object);
+	static void onRotating(const TouchGesture & tg,void * call_object);
 
-	static void onTG_NearParallelMoveRight(const TouchGesture & tg,void * call_object);
-	static void onTG_NearParallelMoveUp(const TouchGesture & tg,void * call_object);
-	static void onTG_NearParallelMoveLeft(const TouchGesture & tg,void * call_object);
-	static void onTG_NearParallelMoveDown(const TouchGesture & tg,void * call_object);
+	static void onParallel(const TouchGesture & tg,void * call_object);
+	static void onParallelClick(const TouchGesture & tg,void * call_object);
+	static void onParallelMove(const TouchGesture & tg,void * call_object);
 	
-	static void onTG_MultiDown(const TouchGesture & tg,void * call_object);
-	static void onTG_MultiMove(const TouchGesture & tg,void * call_object);
-	static void onTG_MultiUp(const TouchGesture & tg,void * call_object);
-
-	static void onTG_MultiMoveRight(const TouchGesture & tg,void * call_object);
-	static void onTG_MultiMoveUp(const TouchGesture & tg,void * call_object);
-	static void onTG_MultiMoveLeft(const TouchGesture & tg,void * call_object);
-	static void onTG_MultiMoveDown(const TouchGesture & tg,void * call_object);
+	static void onMulti(const TouchGesture & tg,void * call_object);
+	static void onMultiMove(const TouchGesture & tg,void * call_object);
 	
 	// onTG_TouchEnd: to clear what need to clear;
-	static void onTG_TouchEnd(const TouchGesture & tg,void * call_object);
+	static void onGesturesClear(const TouchGesture & tg,void * call_object);
 	
 	
 	//

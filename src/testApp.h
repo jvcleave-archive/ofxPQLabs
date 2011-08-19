@@ -21,5 +21,23 @@ class testApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 	
 		ofxPQLabs connection;
-		void onTouchEventData(TouchEventData & event);
+	void onSingleTouchGestureEvent(SingleTouchGestureEvent & event);
+	void onSingleTouchMoveEvent(SingleTouchMoveEvent & event);
+
+	void onRotateEvent(RotateEvent & event);
+	void onRotatingEvent(RotatingEvent & event);
+
+	void onSecondTouchEvent(SecondTouchEvent & event);
+	
+	void onSplitEvent(SplitEvent & event);
+	void onSplitMoveEvent(SplitMoveEvent & event);
+	
+	void onParallelEvent(ParallelEvent & event);
+	void onParallelClickEvent(ParallelClickEvent & event);
+	void onParallelMoveEvent(ParallelMoveEvent & event);
+	
+	void onMultiEvent(MultiEvent & event);
+	void onMultiMoveEvent(MultiMoveEvent & event);
+	
+	void onGestureClearEvent(GestureClearEvent & event);
 };
