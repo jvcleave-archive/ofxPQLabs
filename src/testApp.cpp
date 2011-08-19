@@ -5,8 +5,13 @@ void testApp::setup()
 {
 	ofSetLogLevel(OF_LOG_VERBOSE);
 	connection.connect("127.0.0.1");
+	ofAddListener(connection.touchEventDataEventDispatcher, this, &testApp::onTouchEventData);
 }
 
+void testApp::onTouchEventData(TouchEventData & event)
+{
+	cout << "testApp::onTouchEventData!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" <<endl;
+}
 //--------------------------------------------------------------
 void testApp::update(){
 

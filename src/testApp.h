@@ -21,4 +21,5 @@ class testApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 	
 		ofxPQLabs connection;
+		void onTouchEventData(TouchEventData & event);
 };

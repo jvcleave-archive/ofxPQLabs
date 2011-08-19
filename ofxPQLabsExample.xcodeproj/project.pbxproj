@@ -127,6 +127,7 @@
 			children = (
 				03DCB96E13FB19B4004E126E /* ofxPQLabs.cpp */,
 				03DCB96F13FB19B4004E126E /* ofxPQLabs.h */,
+				E45BE5980E8CC70C009D7055 /* frameworks */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -190,6 +191,7 @@
 				BBAB23C913894ECA00AA2426 /* system frameworks */,
 			);
 			name = frameworks;
+			path = ../../..;
 			sourceTree = "<group>";
 		};
 		E4B69B4A0A3A1720003C02F2 = {
@@ -200,7 +202,6 @@
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
-				E45BE5980E8CC70C009D7055 /* frameworks */,
 				E4B69B5B0A3A1756003C02F2 /* ofxPQLabsExampleDebug.app */,
 			);
 			sourceTree = "<group>";
