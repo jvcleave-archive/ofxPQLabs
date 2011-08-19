@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxPQLabs.h"
 
-class testApp : public ofBaseApp, public ofxPQLabsListener{
+class testApp : public ofBaseApp{
 
 	public:
 		void setup();
@@ -21,5 +21,4 @@ class testApp : public ofBaseApp, public ofxPQLabsListener{
 		void gotMessage(ofMessage msg);
 	
 		ofxPQLabs connection;
-		void onTG_Default(const TouchGesture & tg,void * call_object);
 };

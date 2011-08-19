@@ -59,7 +59,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0370969313FC5CC90039BEAE /* ofxPQLabsListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPQLabsListener.h; sourceTree = "<group>"; };
 		03DCB95D13FB185D004E126E /* PQMTClient.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = PQMTClient.a; sourceTree = "<group>"; };
 		03DCB95E13FB185D004E126E /* PQMTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PQMTClient.h; sourceTree = "<group>"; };
 		03DCB96E13FB19B4004E126E /* ofxPQLabs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPQLabs.cpp; sourceTree = "<group>"; };
@@ -128,7 +127,6 @@
 			children = (
 				03DCB96E13FB19B4004E126E /* ofxPQLabs.cpp */,
 				03DCB96F13FB19B4004E126E /* ofxPQLabs.h */,
-				0370969313FC5CC90039BEAE /* ofxPQLabsListener.h */,
 			);
 			path = src;
 			sourceTree = "<group>";

@@ -16,10 +16,12 @@
 
 #include "ofMain.h"
 #include "PQMTClient.h"
-#include "ofxPQLabsListener.h"
 
 
-
+struct TouchEventData {
+	TouchEventData(TouchGesture tg):touchGesture(tg){};
+	TouchGesture touchGesture;
+};
 
 
 
@@ -30,8 +32,7 @@ public:
 	// Init: the entry of sample codes;
 	//		demonstrate: ConnectServer, SendRequest etc;
 	void connect(const char * ipAddress);
-	void setListener(ofxPQLabsListener* _listener);
-	ofxPQLabsListener* listener;
+	ofEvent<TouchEventData> touchEventDataEventDispatcher;
 	
 private:
 #pragma mark Callback functions

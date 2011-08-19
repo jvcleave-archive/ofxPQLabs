@@ -26,10 +26,7 @@ ofxPQLabs::~ofxPQLabs()
 	DisconnectServer();
 }
 
-void ofxPQLabs::setListener( ofxPQLabsListener* _listener )
-{
-    listener = _listener;
-}
+
 #pragma mark functions
 void ofxPQLabs::connect(const char * ipAddress = "127.0.0.1")
 {
@@ -84,7 +81,7 @@ void ofxPQLabs::connect(const char * ipAddress = "127.0.0.1")
 void ofxPQLabs:: initializeFunctionsOnTouchGestures()
 {
 	ofLog(OF_LOG_VERBOSE, "ofxPQLabs::initializeFunctionsOnTouchGestures");
-	touchGestureTypes[TG_TOUCH_START] = &ofxPQLabs::onTG_TouchStart;
+	touchGestureTypes[TG_TOUCH_START] = onTG_TouchStart;
 	touchGestureTypes[TG_DOWN] = &ofxPQLabs::onTG_Down;
 	touchGestureTypes[TG_MOVE] = &ofxPQLabs::onTG_Move;
 	touchGestureTypes[TG_UP] = &ofxPQLabs::onTG_Up;
@@ -234,19 +231,21 @@ void ofxPQLabs:: onTouchGesture(const TouchGesture & tg)
 	if(TG_NO_ACTION == tg.type)
 		return ;
 	onTG_Default(tg, this);
-	listener->onTG_Default(tg, this);
 	PFuncOnTouchGesture touchGestureType = touchGestureTypes[tg.type];
 	if(touchGestureType != NULL)
 	{
-		//touchGestureType(tg, this);
+		touchGestureType(tg, this);
 	}
 }
 
 #pragma mark Gesture Callbacks: Basic 
 
-void ofxPQLabs:: onTG_TouchStart(const TouchGesture & tg,void * call_object)
+void ofxPQLabs:: onTG_TouchStart(const TouchGesture & tg, void * call_object)
 {
 	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs:: onTG_TouchStart");
+	TouchEventData event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->touchEventDataEventDispatcher, event);
 }
 
 void ofxPQLabs:: onTG_Default(const TouchGesture & tg,void * call_object) // just show the gesture

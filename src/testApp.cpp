@@ -4,7 +4,6 @@
 void testApp::setup()
 {
 	ofSetLogLevel(OF_LOG_VERBOSE);
-	connection.setListener(this);
 	connection.connect("127.0.0.1");
 }
 
@@ -63,15 +62,3 @@ void testApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
-void testApp::onTG_Default(const TouchGesture & tg,void * call_object) // just show the gesture
-{
-	
-	stringstream ss;
-	ss << "Gesture name:"<< GetGestureName(tg) << " Type:" << tg.type << " Param size:" << tg.param_size << " ";
-	for(int i = 0; i < tg.param_size; ++ i)
-		ss << tg.params[i] << " ";
-	ss << endl;
-	
-	
-	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_Default: "+ ofToString(ss));
-}
