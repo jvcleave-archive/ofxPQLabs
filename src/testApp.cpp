@@ -26,10 +26,16 @@ void testApp::onSingleTouchGestureEvent(SingleTouchGestureEvent & event)
 	cout << "testApp::onSingleTouchGestureEvent: " << endl;
 }
 
+
 void testApp::onSingleTouchMoveEvent(SingleTouchMoveEvent & event)
 {
 	cout << "testApp::onSingleTouchMoveEvent: " << endl;
 }
+void testApp::onBigTouchEvent(BigTouchEvent & event)
+{
+	cout << "testApp::onBigTouchEvent: " << endl;
+}
+
 void testApp::onRotateEvent(RotateEvent & event)
 {
 	cout << "testApp::onRotateEvent: " << endl;

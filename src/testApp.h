@@ -22,6 +22,7 @@ class testApp : public ofBaseApp{
 	
 		ofxPQLabs connection;
 	void onSingleTouchGestureEvent(SingleTouchGestureEvent & event);
+	void onBigTouchEvent(BigTouchEvent & event);
 	void onSingleTouchMoveEvent(SingleTouchMoveEvent & event);
 
 	void onRotateEvent(RotateEvent & event);

@@ -9,9 +9,9 @@
 	};
 	03DCB96E13FB19B4004E126E /* ofxPQLabs.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1197, 5018}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1197, 5239}}";
 			sepNavSelRange = "{7944, 23}";
-			sepNavVisRange = "{7614, 1748}";
+			sepNavVisRange = "{7573, 1705}";
 			sepNavWindowFrame = "{{1741, 8}, {1370, 995}}";
 		};
 	};
@@ -114,9 +114,9 @@
 	};
 	349F809713FEBCE50024A933 /* ofxPQLabsEventTypes.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1197, 4498}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1197, 4732}}";
 			sepNavSelRange = "{130, 31}";
-			sepNavVisRange = "{0, 1038}";
+			sepNavVisRange = "{0, 999}";
 			sepNavWindowFrame = "{{1692, 55}, {1370, 995}}";
 		};
 	};
@@ -194,8 +194,8 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 335717321;
-			PBXWorkspaceStateSaveDate = 335717321;
+			PBXPerProjectTemplateStateSaveDate = 335717532;
+			PBXWorkspaceStateSaveDate = 335717532;
 		};
 		perUserProjectItems = {
 			349F803B13FEB35E0024A933 = 349F803B13FEB35E0024A933 /* PBXTextBookmark */;
@@ -229,7 +229,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1197, 1963}}";
 			sepNavSelRange = "{203, 33}";
-			sepNavVisRange = "{2918, 1230}";
+			sepNavVisRange = "{2917, 1231}";
 		};
 	};
 	E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {

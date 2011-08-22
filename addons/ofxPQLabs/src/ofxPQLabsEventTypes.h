@@ -338,6 +338,10 @@ struct GestureClearEvent
 
 struct BigTouchEvent 
 {
+//	TYPES
+//	TG_BIG_UP
+//	TG_BIG_MOVE
+//	TG_BIG_DOWN
 	BigTouchEvent(TouchGesture tg)
 	{
 		touchGesture = tg;
