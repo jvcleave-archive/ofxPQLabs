@@ -335,3 +335,22 @@ struct GestureClearEvent
 	}
 	TouchGesture touchGesture;
 };
+
+struct BigTouchEvent 
+{
+	BigTouchEvent(TouchGesture tg)
+	{
+		touchGesture = tg;
+		fistPosition = ofPoint(tg.params[0], tg.params[1]);
+		stringstream ss;
+		ss << "BigTouchEvent "
+			<< "  Fist size object" 
+			<< " fistPosition X: "<< tg.params[0]
+			<< " fistPosition Y :" << tg.params[1]
+		<< endl;
+		ofLog(OF_LOG_VERBOSE, ss.str());
+		
+	}
+	TouchGesture touchGesture;
+	ofPoint fistPosition;
+};

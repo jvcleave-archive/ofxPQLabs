@@ -45,7 +45,7 @@ public:
 	ofEvent<MultiMoveEvent> multiMoveEventDispatcher;
 	ofEvent<ParallelClickEvent> parallelClickEventDispatcher;
 	ofEvent<GestureClearEvent> gestureClearEventDispatcher;
-
+	ofEvent<BigTouchEvent> bigTouchEventDispatcher;
 	
 	
 private:
@@ -86,6 +86,8 @@ private:
 
 	static void onSingleTouchGesture(const TouchGesture & tg,void * call_object);
 	static void onSingleTouchMove(const TouchGesture & tg,void * call_object);
+	
+	static void onBigTouch(const TouchGesture & tg,void * call_object);
 	
 	static void onSecondTouch(const TouchGesture & tg,void * call_object);
 

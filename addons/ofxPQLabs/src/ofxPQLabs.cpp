@@ -91,6 +91,11 @@ void ofxPQLabs:: initializeFunctionsOnTouchGestures()
 	touchGestureTypes[TG_MOVE_LEFT] = &ofxPQLabs::onSingleTouchMove;
 	touchGestureTypes[TG_MOVE_DOWN] = &ofxPQLabs::onSingleTouchMove;
 
+	touchGestureTypes[TG_BIG_UP] = &ofxPQLabs::onBigTouch;
+	touchGestureTypes[TG_BIG_DOWN] = &ofxPQLabs::onBigTouch;
+	touchGestureTypes[TG_BIG_MOVE] = &ofxPQLabs::onBigTouch;
+	
+	
 
 	touchGestureTypes[TG_SECOND_DOWN] = &ofxPQLabs::onSecondTouch;
 	touchGestureTypes[TG_SECOND_UP] = &ofxPQLabs::onSecondTouch;
@@ -252,6 +257,8 @@ void ofxPQLabs:: onSingleTouchGesture(const TouchGesture & tg, void * call_objec
 	ofNotifyEvent(labsInstance->singleTouchGestureEventDispatcher, event);
 }
 
+
+
 void ofxPQLabs:: onTG_Default(const TouchGesture & tg,void * call_object) // just show the gesture
 {
 	
@@ -264,6 +271,8 @@ void ofxPQLabs:: onTG_Default(const TouchGesture & tg,void * call_object) // jus
 	
 	ofLog(OF_LOG_VERBOSE,  "ofxPQLabs::onTG_Default: "+ ss.str());
 }
+
+
 
 #pragma mark Gesture Callbacks: Directional Moves 
 void ofxPQLabs:: onSingleTouchMove(const TouchGesture & tg, void * call_object)
@@ -280,8 +289,6 @@ void ofxPQLabs:: onSecondTouch(const TouchGesture & tg, void * call_object)
 	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
 	ofNotifyEvent(labsInstance->secondTouchEventDispatcher, event);
 }
-
-
 
 
 #pragma mark Gesture Callbacks: Split
@@ -301,11 +308,6 @@ void ofxPQLabs:: onSplitMove(const TouchGesture & tg, void * call_object)
 }
 
 
-
-
-
-
-
 #pragma mark Gesture Callbacks: Rotate
 void ofxPQLabs:: onRotate(const TouchGesture & tg, void * call_object)
 {
@@ -320,8 +322,6 @@ void ofxPQLabs:: onRotating(const TouchGesture & tg, void * call_object)
 	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
 	ofNotifyEvent(labsInstance->rotatingEventDispatcher, event);
 }
-
-
 
 
 
@@ -350,6 +350,8 @@ void ofxPQLabs:: onParallelMove(const TouchGesture & tg, void * call_object)
 	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
 	ofNotifyEvent(labsInstance->parallelMoveEventDispatcher, event);
 }
+
+
 #pragma mark Gesture Callbacks: Multi 
 
 void ofxPQLabs:: onMulti(const TouchGesture & tg, void * call_object)
@@ -359,6 +361,7 @@ void ofxPQLabs:: onMulti(const TouchGesture & tg, void * call_object)
 	ofNotifyEvent(labsInstance->multiEventDispatcher, event);
 }
 
+
 #pragma mark Gesture Callbacks: Multi Directional Move 
 void ofxPQLabs:: onMultiMove(const TouchGesture & tg, void * call_object)
 {
@@ -366,6 +369,15 @@ void ofxPQLabs:: onMultiMove(const TouchGesture & tg, void * call_object)
 	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
 	ofNotifyEvent(labsInstance->multiMoveEventDispatcher, event);
 }
+
+#pragma mark Gesture Callbacks: Big TouchGesture 
+void ofxPQLabs:: onBigTouch(const TouchGesture & tg, void * call_object)
+{
+	BigTouchEvent event(tg);
+	ofxPQLabs* labsInstance = static_cast<ofxPQLabs*>(call_object);
+	ofNotifyEvent(labsInstance->bigTouchEventDispatcher, event);
+}
+
 
 #pragma mark Gesture Callbacks: END
 // onTG_TouchEnd: to clear what need to clear
@@ -377,3 +389,5 @@ void ofxPQLabs:: onGesturesClear(const TouchGesture & tg,void * call_object)
 	ofNotifyEvent(labsInstance->gestureClearEventDispatcher, event);
 	
 }
+
+
