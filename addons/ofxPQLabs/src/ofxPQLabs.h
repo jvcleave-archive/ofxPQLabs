@@ -47,6 +47,7 @@ public:
 	ofEvent<GestureClearEvent> gestureClearEventDispatcher;
 	ofEvent<BigTouchEvent> bigTouchEventDispatcher;
 	
+	ofEvent<TouchPointEvent> touchEventDispatcher;
 	
 private:
 #pragma mark Callback functions

@@ -9,6 +9,16 @@
 #include "ofMain.h"
 
 
+struct TouchPointEvent
+{
+	TouchPointEvent(TouchPoint tp)
+	{
+		touchPoint = tp;
+	}
+	TouchPoint touchPoint;
+	
+};
+	
 struct SingleTouchGestureEvent
 {
 //TYPES

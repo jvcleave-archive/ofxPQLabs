@@ -213,6 +213,8 @@ void ofxPQLabs:: onGetServerResolution(int x, int y, void * call_back_object)
 //	you can do mouse map like "onTG_Down" etc;
 void ofxPQLabs:: onTouchPoint(const TouchPoint & touchPoint)
 {
+	TouchPointEvent event(touchPoint);
+	ofNotifyEvent(touchEventDispatcher, event);
 	stringstream ss;
 	switch(touchPoint.point_event)
 	{

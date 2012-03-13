@@ -41,4 +41,6 @@ class testApp : public ofBaseApp{
 	void onMultiMoveEvent(MultiMoveEvent & event);
 	
 	void onGestureClearEvent(GestureClearEvent & event);
+	
+	void onTouchPoint(TouchPointEvent & event);
 };

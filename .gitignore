@@ -1,3 +1,9 @@
 /build
 .app
 *.app
+/ofxPQLabsExample.xcodeproj/jvcleave.mode1v3
+/ofxPQLabsExample.xcodeproj/jvcleave.pbxuser
+/ofxPQLabsExample.xcodeproj/theo.mode1v3
+/ofxPQLabsExample.xcodeproj/theo.pbxuser
+/ofxPQLabsExample.xcodeproj/vancleave.mode1v3
+/ofxPQLabsExample.xcodeproj/vancleave.pbxuser

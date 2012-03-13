@@ -7,6 +7,7 @@ void testApp::setup()
 	connection.connect("127.0.0.1");
 	ofAddListener(connection.singleTouchGestureEventDispatcher, this, &testApp::onSingleTouchGestureEvent);
 	ofAddListener(connection.singleTouchMoveGestureEventDispatcher, this, &testApp::onSingleTouchMoveEvent);
+	ofAddListener(connection.bigTouchEventDispatcher, this, &testApp::onBigTouchEvent);
 	ofAddListener(connection.rotateEventDispatcher, this, &testApp::onRotateEvent);
 	ofAddListener(connection.rotatingEventDispatcher, this, &testApp::onRotatingEvent);
 	ofAddListener(connection.secondTouchEventDispatcher, this, &testApp::onSecondTouchEvent);
@@ -18,9 +19,25 @@ void testApp::setup()
 	ofAddListener(connection.multiEventDispatcher, this, &testApp::onMultiEvent);
 	ofAddListener(connection.multiMoveEventDispatcher, this, &testApp::onMultiMoveEvent);
 	ofAddListener(connection.gestureClearEventDispatcher, this, &testApp::onGestureClearEvent);
+	
+	ofAddListener(connection.touchEventDispatcher, this, &testApp::onTouchPoint);
 
 }
-
+void testApp::onTouchPoint(TouchPointEvent & event)
+{
+	
+	stringstream ss;
+	 ss << "testApp::onTouchPoint: " 
+		<< "touchPoint.id: " << event.touchPoint.id
+		<< " touchPoint.x: " << event.touchPoint.x
+		<< " touchPoint.y: " << event.touchPoint.y
+		<< " touchPoint.dx: " << event.touchPoint.dx
+		<< " touchPoint.dy: " << event.touchPoint.dy
+	<< endl;
+	
+	cout << ss.str() << endl;
+	
+}
 void testApp::onSingleTouchGestureEvent(SingleTouchGestureEvent & event)
 {
 	cout << "testApp::onSingleTouchGestureEvent: " << endl;
@@ -31,6 +48,7 @@ void testApp::onSingleTouchMoveEvent(SingleTouchMoveEvent & event)
 {
 	cout << "testApp::onSingleTouchMoveEvent: " << endl;
 }
+
 void testApp::onBigTouchEvent(BigTouchEvent & event)
 {
 	cout << "testApp::onBigTouchEvent: " << endl;
